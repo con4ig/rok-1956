@@ -968,7 +968,6 @@
         <section class="slide">
             <div class="layout-center">
                 <h1>Dziękuję</h1>
-                <p>Koniec prezentacji.</p>
             </div>
         </section>
 
@@ -1042,6 +1041,11 @@
 
             document.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
+                nextSlide();
+            });
+
+            document.addEventListener('click', (e) => {
+                if (e.target.tagName.toUpperCase() === 'A') return;
                 nextSlide();
             });
 
