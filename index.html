@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,7 @@
         :root {
             --bg-color: #0f0f0f;
             --text-color: #e5e5e5;
-            --muted-color: #888888;
+            --muted-color: #a0a0a0;
             --accent-color: #d32f2f;
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
@@ -42,14 +43,17 @@
 
         .slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease-out;
-            padding: 5vw;
+            padding: 4vw;
         }
 
         .slide.active {
@@ -57,22 +61,10 @@
             pointer-events: auto;
         }
 
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            width: 100%;
-            max-width: 1400px;
-            align-items: center;
-        }
-
-        .center-layout {
-            text-align: center;
-            max-width: 900px;
-        }
-
-        /* Typography */
-        h1, h2 {
+        /* Typography Defaults */
+        h1,
+        h2,
+        h3 {
             font-family: var(--font-display);
             font-weight: 700;
             line-height: 1.1;
@@ -80,55 +72,132 @@
         }
 
         h1 {
-            font-size: clamp(4rem, 8vw, 8rem);
-            margin-bottom: 2rem;
+            font-size: clamp(2.5rem, 4vw, 5rem);
+            margin-bottom: 1rem;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
         }
 
         h2 {
-            font-size: clamp(3rem, 5vw, 5rem);
-            margin-bottom: 2rem;
+            font-size: clamp(2rem, 3.5vw, 4rem);
+            margin-bottom: 1.5rem;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
         }
 
         p {
-            font-size: clamp(1.2rem, 2vw, 1.5rem);
-            line-height: 1.5;
+            font-size: clamp(0.9rem, 1.1vw, 1.3rem);
+            line-height: 1.65;
             color: var(--muted-color);
-            max-width: 35ch;
+            max-width: 900px;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
         }
 
-        .center-layout p {
-            margin: 0 auto;
-            max-width: 45ch;
+        .slide.active h1,
+        .slide.active h2,
+        .slide.active p {
+            transform: translateY(0);
         }
 
         .date-marker {
             font-family: var(--font-display);
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--accent-color);
             margin-bottom: 1rem;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* Stats Editorial Style */
+        .slide.active .date-marker {
+            transform: translateY(0);
+        }
+
+        /* LAYOUT 1: Center */
+        .layout-center {
+            text-align: center;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .layout-center p {
+            text-align: justify;
+        }
+
+        /* LAYOUT 2: Grid (Text Left, 3 Stats Right) */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1400px;
+            align-items: flex-start;
+        }
+
+        .layout-grid p {
+            text-align: justify;
+            max-width: none;
+        }
+
         .stat-group {
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+            gap: 2rem;
+            margin-top: 4rem;
         }
 
         .stat-item {
             border-top: 2px solid #222;
             padding-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: var(--text-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.7s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        .slide.active .stat-item::before {
+            transform: scaleX(1);
+        }
+
+        .slide.active .stat-item:nth-child(1)::before {
+            transition-delay: 0.3s;
+        }
+
+        .slide.active .stat-item:nth-child(2)::before {
+            transition-delay: 0.5s;
+        }
+
+        .slide.active .stat-item:nth-child(3)::before {
+            transition-delay: 0.7s;
         }
 
         .stat-num {
             font-family: var(--font-display);
-            font-size: clamp(4rem, 6vw, 7rem);
+            font-size: clamp(2.5rem, 3vw, 4rem);
             font-weight: 700;
             line-height: 1;
             color: var(--text-color);
             margin-bottom: 0.5rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .stat-num.red {
@@ -136,8 +205,153 @@
         }
 
         .stat-desc {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--muted-color);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active .stat-item:nth-child(1) .stat-num {
+            transition-delay: 0.4s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active .stat-item:nth-child(2) .stat-num {
+            transition-delay: 0.6s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active .stat-item:nth-child(3) .stat-num {
+            transition-delay: 0.8s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active .stat-item:nth-child(1) .stat-desc {
+            transition-delay: 0.5s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active .stat-item:nth-child(2) .stat-desc {
+            transition-delay: 0.7s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .slide.active .stat-item:nth-child(3) .stat-desc {
+            transition-delay: 0.9s;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* LAYOUT 3: Split Alt (Huge Stat Left, Text Right) */
+        .layout-split-alt {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .huge-stat-container {
+            flex: 0 0 auto;
+            text-align: right;
+            min-width: 250px;
+        }
+
+        .huge-stat {
+            font-size: clamp(6rem, 10vw, 12rem);
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+        }
+
+        .slide.active .huge-stat {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .split-content {
+            flex: 1;
+        }
+
+        .split-content p {
+            text-align: justify;
+        }
+
+        /* LAYOUT 4: Bottom Layout */
+        .layout-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            height: 100%;
+            width: 100%;
+            max-width: 1200px;
+            padding-bottom: 8vh;
+        }
+
+        .layout-bottom h2 {
+            font-size: clamp(3rem, 5vw, 6rem);
+            max-width: 20ch;
+        }
+
+        .layout-bottom p {
+            text-align: justify;
+            max-width: 100%;
+        }
+
+        /* LAYOUT 5: Huge Background Typography */
+        .layout-bg-type {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-text {
+            position: absolute;
+            font-size: 20vw;
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: #161616;
+            z-index: -1;
+            white-space: nowrap;
+            user-select: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active .bg-text {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .layout-bg-type .content-box {
+            background: rgba(15, 15, 15, 0.85);
+            padding: 3rem;
+            border-left: 4px solid var(--accent-color);
+            max-width: 1000px;
+            backdrop-filter: blur(10px);
+        }
+
+        .layout-bg-type p {
+            text-align: justify;
+            max-width: 100%;
         }
 
         /* Nav Capsule */
@@ -150,9 +364,10 @@
             align-items: center;
             gap: 1.5rem;
             z-index: 100;
-            background: #1a1a1a;
+            background: #111;
+            border: 1px solid #333;
             padding: 0.5rem 1rem;
-            border-radius: 4px; /* Harder corners, not a pill */
+            border-radius: 4px;
         }
 
         .controls-capsule button {
@@ -160,8 +375,9 @@
             border: none;
             color: #fff;
             font-family: var(--font-display);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
+            letter-spacing: 0.05em;
             cursor: pointer;
             padding: 0.5rem;
             transition: color 0.2s;
@@ -182,297 +398,577 @@
             color: #888;
             font-variant-numeric: tabular-nums;
         }
-
-        /* Simple dramatic line */
-        .dramatic-line {
-            width: 100%;
-            height: 2px;
-            background-color: var(--accent-color);
-            margin-top: 2rem;
-            transform-origin: left;
-            transform: scaleX(0);
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
-        }
-
-        .slide.active .dramatic-line {
-            transform: scaleX(1);
-        }
-
     </style>
 </head>
+
 <body>
 
     <div class="slides-container" id="slides-container">
 
-        <!-- Slide 1 -->
+        <!-- Slide 1: Title -->
         <section class="slide active">
-            <div class="center-layout">
-                <h1>1956</h1>
-                <h2>Przełom i Nadzieja</h2>
-                <p>Historia buntu, który wstrząsnął posadami systemu komunistycznego w Polsce.</p>
-                <div class="dramatic-line"></div>
-                <p style="margin-top: 2rem; font-size: 1rem;">Autor: Szymon</p>
+            <div class="layout-center">
+                <h2>Rok 1956 w Polsce</h2>
+                <div class="dramatic-line" style="max-width: 200px; margin-left: auto; margin-right: auto;"></div>
+                <p style="margin-top: 2.5rem; font-size: 1.1rem; max-width: 100%;">Autor: Szymon Wira</p>
             </div>
         </section>
 
-        <!-- Slide 2 -->
+        <!-- Slide 2: Center -->
         <section class="slide">
-            <div class="grid-layout">
+            <div class="layout-center">
+                <span class="date-marker">Wstęp do roku 1956 w Polsce</span>
+                <h2>Tło polityczne i społeczne</h2>
+                <p>Rok 1956 jest powszechnie uważany za jeden z najbardziej przełomowych momentów w powojennej historii
+                    Polski. Sytuacja społeczno-polityczna w kraju była efektem kilku lat narastającego niezadowolenia z
+                    opresyjnego systemu stalinowskiego. Po zakończeniu II wojny światowej Polska znalazła się w strefie
+                    wpływów Związku Radzieckiego, co wiązało się z narzuceniem wzorców ustrojowych. Obywatele zmagali
+                    się z wszechobecnym terrorem aparatu bezpieczeństwa, drastyczną cenzurą oraz brakiem podstawowych
+                    swobód obywatelskich. Sytuacja gospodarcza w pierwszej połowie lat pięćdziesiątych stale się
+                    pogarszała, doprowadzając do ubóstwa wielu rodzin. Plan sześcioletni, skoncentrowany na przemyśle
+                    ciężkim, doprowadził do ogromnych niedoborów artykułów pierwszej potrzeby na rynku. Śmierć Józefa
+                    Stalina w marcu 1953 roku zapoczątkowała powolny i niepewny proces destabilizacji monopartyjnego
+                    reżimu. W społeczeństwie polskim stopniowo narastała nadzieja na zmianę dotychczasowego kursu
+                    politycznego i wyzwolenie spod radzieckiej dominacji.</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: Split Alt -->
+        <section class="slide">
+            <div class="layout-split-alt">
+                <div class="huge-stat-container">
+                    <div class="huge-stat">12.03</div>
+                </div>
+                <div class="split-content">
+                    <span class="date-marker">Skutki nagłej śmierci</span>
+                    <h2>Śmierć Bolesława Bieruta i jej polityczne skutki</h2>
+                    <p>Ważnym impulsem przyspieszającym przemiany polityczne w Polsce stała się niespodziewana śmierć
+                        Bolesława Bieruta. Przywódca polskiej partii komunistycznej zmarł 12 marca 1956 roku podczas
+                        oficjalnej wizyty w Moskwie. Jego zgon nastąpił niedługo po zakończeniu obrad XX Zjazdu
+                        Komunistycznej Partii Związku Radzieckiego. Wokół nagłego odejścia stalinowskiego dyktatora w
+                        polskim społeczeństwie natychmiast narosło wiele teorii spiskowych i plotek. Śmierć Bieruta
+                        wywołała ogromne zamieszanie oraz dezorientację w najwyższych kręgach rządzącej Polskiej
+                        Zjednoczonej Partii Robotniczej. Wydarzenie to otworzyło drogę do otwartej walki o władzę
+                        pomiędzy różnymi frakcjami wewnątrz partyjnego aparatu. Nowym I sekretarzem Komitetu Centralnego
+                        PZPR został wybrany Edward Ochab, jednak nie zdołał on opanować sytuacji. Brak silnego,
+                        autorytarnego lidera znacząco osłabił zdolność partii do kontrolowania coraz bardziej burzliwych
+                        nastrojów społecznych.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Bottom -->
+        <section class="slide">
+            <div class="layout-bottom">
+                <span class="date-marker">Szok i niedowierzanie</span>
+                <h2>XX Zjazd KPZR i skutki tajnego referatu Chruszczowa</h2>
+                <p>W lutym 1956 roku w Moskwie odbył się XX Zjazd Komunistycznej Partii Związku Radzieckiego, który
+                    zmienił losy całego bloku wschodniego. Podczas zamkniętego posiedzenia nowy radziecki przywódca
+                    Nikita Chruszczow wygłosił przełomowy referat podważający kult jednostki. Dokument ten oficjalnie
+                    potępiał zbrodnie, samowolę oraz masowe represje dokonane za czasów dyktatorskich rządów Józefa
+                    Stalina. Choć wystąpienie miało pozostać poufne, jego treść bardzo szybko przedostała się do opinii
+                    publicznej poza granicami ZSRR. W Polsce odpis referatu Chruszczowa opublikowano w tysiącach
+                    egzemplarzy i rozpowszechniano wśród obywateli. Ujawnienie skali stalinowskich zbrodni wywołało
+                    głęboki szok intelektualny oraz moralny kryzys w szeregach PZPR. Społeczeństwo poczuło, że
+                    stalinowski aparat nacisku traci swoją dotychczasową nietykalność i monopol na prawdę. Wydarzenie to
+                    dało potężny impuls do publicznego domagania się rozliczenia winnych i przeprowadzenia głębokich
+                    reform ustrojowych.</p>
+            </div>
+        </section>
+
+        <!-- Slide 4: Grid -->
+        <section class="slide">
+            <div class="layout-grid">
                 <div>
-                    <span class="date-marker">1953</span>
-                    <h2>Koniec ery Stalina</h2>
-                    <p>Śmierć radzieckiego dyktatora rozpoczyna powolny proces zmian. Terror słabnie, a w państwach satelickich rodzi się nadzieja na odwilż i złagodzenie represji.</p>
+                    <span class="date-marker">Przełamywanie strachu</span>
+                    <h2>Odwilż polityczna i kulturalna w pierwszej połowie 1956 roku</h2>
+                    <p>Pierwsze miesiące 1956 roku przyniosły w Polsce zauważalne łagodzenie dotychczasowych surowych
+                        rygorów politycznych. Proces ten, nazywany powszechnie odwilżą gomułkowską, objął swoim
+                        zasięgiem wiele dziedzin życia społecznego i kulturalnego. Znacznie osłabiono gorset cenzury
+                        państwowej, co umożliwiło pisarzom i dziennikarzom podejmowanie wcześniej zakazanych tematów.
+                        Dużą rolę w budzeniu świadomości społecznej odegrał tygodnik 'Po prostu', który stał się głosem
+                        młodego pokolenia inteligencji. W całym kraju zaczęły powstawać niezależne kluby dyskusyjne, z
+                        których najsłynniejszym był warszawski Klub Krzywego Koła. Artyści i twórcy zaczęli odrzucać
+                        narzuconą odgórnie doktrynę socrealizmu na rzecz swobody ekspresji artystycznej. W prasie
+                        pojawiły się artykuły krytykujące absurdalne decyzje gospodarcze oraz zakłamanie oficjalnej
+                        propagandy sukcesu. Burzliwa debata publiczna stopniowo przełamywała barierę strachu,
+                        przygotowując grunt pod bardziej radykalne wystąpienia obywatelskie.</p>
                 </div>
                 <div class="stat-group">
                     <div class="stat-item">
-                        <div class="stat-num">3 lata</div>
-                        <div class="stat-desc">Zajęło partii komunistycznej w Polsce odczucie realnych zmian po śmierci Stalina.</div>
+                        <div class="stat-num">Cenzura</div>
+                        <div class="stat-desc">Zauważalne osłabienie kontroli państwa nad mediami.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Po prostu</div>
+                        <div class="stat-desc">Głos młodego pokolenia inteligencji i studentów.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Kluby</div>
+                        <div class="stat-desc">Powstawanie miejsc debaty, np. Klub Krzywego Koła.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Slide 3 -->
+        <!-- Slide 5: Center -->
         <section class="slide">
-            <div class="center-layout">
-                <span class="date-marker">Luty 1956</span>
-                <h2>XX Zjazd KPZR</h2>
-                <p>Nikita Chruszczow w tajnym referacie potępia kult jednostki. Szokujący dokument szybko obiega Polskę, prowokując społeczeństwo do zadawania trudnych pytań władzy.</p>
+            <div class="layout-center">
+                <span class="date-marker">Kwiecień 1956</span>
+                <h2>Amnestia i rehabilitacja ofiar stalinowskich</h2>
+                <p>Pod naporem rosnącego niezadowolenia społecznego władze komunistyczne zostały zmuszone do podjęcia
+                    kroków łagodzących represje. W kwietniu 1956 roku Sejm PRL uchwalił szeroko zakrojoną ustawę o
+                    amnestii dla więźniów politycznych i kryminalnych. Na mocy tego aktu prawnego z więzień i
+                    więziennych obozów pracy zwolniono ponad trzyydzieści pięć tysięcy osób. Amnestia objęła w pierwszej
+                    kolejności byłych żołnierzy niepodległościowej Armii Krajowej oraz innych organizacji podziemnych.
+                    Tysiącom osób anulowano lub znacząco skrócono krzywdzące wyroki wydane na podstawie sfałszowanych
+                    oskarżeń. Rozpoczęto również proces oficjalnej rehabilitacji wojskowych oraz działaczy politycznych
+                    straconych lub skazanych w latach stalinowskich. Powrót więźniów politycznych do domów przyniósł
+                    świadectwa nieludzkich tortur stosowanych przez funkcjonariuszy Urzędu Bezpieczeństwa. Choć amnestia
+                    miała na celu uspokojenie nastrojów, w rzeczywistości pogłębiła oburzenie społeczeństwa wobec
+                    aparatu przemocy.</p>
             </div>
         </section>
 
-        <!-- Slide 4 -->
+        <!-- Slide 6: Background Typography -->
         <section class="slide">
-            <div class="grid-layout">
+            <div class="layout-bg-type">
+                <div class="bg-text">PZPR</div>
+                <div class="content-box">
+                    <span class="date-marker">Wewnętrzny kryzys</span>
+                    <h2>Podziały wewnątrz PZPR - Puławianie i Natolińczycy</h2>
+                    <p>Wiosną 1956 roku w kierownictwie rządzącej partii komunistycznej doszło do wyrazistego rozłamu na
+                        dwie wrogie frakcje. Głównymi obozami rywalizującymi o przejęcie kontroli nad państwem stali się
+                        tak zwani 'Puławianie' oraz 'Natolińczycy'. Grupa Puławian skupiała działaczy opowiadających się
+                        za umiarkowaną liberalizacją systemu oraz przeprowadzeniem kontrolowanych reform. Dążyli oni do
+                        zmniejszenia zakresu terroru i nawiązania dialogu ze środowiskami intelektualnymi dla ratowania
+                        władzy partyjnej. Z kolei frakcja Natolińczyków reprezentowała dogmatyczny, twardogłowy nurt
+                        konserwatywny, przeciwny jakimkolwiek ustępstwom. Natolińczycy proponowali zahamowanie zmian,
+                        powrót do metody silnej ręki oraz wykorzystywanie haseł antysemickich w walce politycznej.
+                        Konflikt wewnątrz partii paraliżował decyzyjność władz centralnych w kluczowych momentach
+                        narastającego kryzysu. Rywalizacja obu grup sprawiła, że aparat państwowy stracił monopol na
+                        jednolite sterowanie sytuacją w kraju.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Bottom -->
+        <section class="slide">
+            <div class="layout-bottom">
+                <span class="date-marker">Koniec bezkarności</span>
+                <h2>Przemiany w aparacie bezpieczeństwa i reforma UB</h2>
+                <p>Jednym z podstawowych żądań społeczeństwa w 1956 roku była całkowita likwidacja wszechwładzy
+                    komunistycznej bezpieki. Ministerstwo Bezpieczeństwa Publicznego już wcześniej podzielono, lecz
+                    Urząd Bezpieczeństwa wciąż budził powszechny strach i odrazę. Pod wpływem ujawnianych faktów o
+                    torturach władze podjęły decyzję o reorganizacji struktur siłowych. Ostatecznie pod koniec 1956 roku
+                    zlikwidowano Komitet do spraw Bezpieczeństwa Publicznego i utworzono Służbę Bezpieczeństwa. Odwołano
+                    i aresztowano najbardziej znanych oprawców stalinowskich, w tym Anatola Fejgina czy Józefa
+                    Różańskiego. Ich procesy sądowe, choć miały charakter ograniczony i pokazowy, stanowiły symboliczny
+                    koniec bezkarnego terroru. Zredukowano liczbę etatowych funkcjonariuszy bezpieki oraz ograniczono
+                    zakres ich oficjalnych kompetencji nadzorczych. Zmiany te dały obywatelom poczucie większego
+                    bezpieczeństwa osobistego i zmniejszyły paraliżujący strach przed aresztowaniem.</p>
+            </div>
+        </section>
+
+        <!-- Slide 8: Grid -->
+        <section class="slide">
+            <div class="layout-grid">
                 <div>
-                    <h2>Wakat na szczycie</h2>
-                    <p>Miesiąc po moskiewskim zjeździe w niejasnych okolicznościach umiera Bolesław Bierut, dotychczasowy I sekretarz PZPR. Władzę przejmuje Edward Ochab.</p>
+                    <span class="date-marker">Iskra zapalna</span>
+                    <h2>Przyczyny Poznańskiego Czerwca - Sytuacja w Wielkopolsce</h2>
+                    <p>Mimo deklarowanych zmian politycznych, codzienna sytuacja życiowa robotników w Poznaniu w
+                        pierwszej połowie 1956 roku ulegała stałemu pogorszeniu. Zakłady Przemysłowe im. Józefa Stalina
+                        w Poznaniu (ZISPO, późniejsze Cegielski) zatrudniały tysiące sfrustrowanych pracowników.
+                        Robotnicy cierpieli z powodu wyśrubowanych norm produkcyjnych, niedostatecznych płac oraz bardzo
+                        złych warunków pracy. Czarę goryczy przepełniło niesprawiedliwe pobieranie podatku od
+                        wynagrodzeń oraz brak wypłaty należnych premii. Wielokrotne petycje wysyłane do Dyrekcji oraz
+                        Ministerstwa Przemysłu Maszynowego w Warszawie pozostawały bez odpowiedzi. Delegacja robotników
+                        udała się do stolicy na rozmowy z władzami, jednak nie uzyskała wiążących gwarancji poprawy
+                        bytu. Bierność i opieszałość dygnitarzy państwowych wywołała powszechne poczucie zlekceważenia i
+                        narastające oburzenie. Wśród załóg poznańskich fabryk dojrzała decyzja o sięgnięciu po
+                        ostateczną formę protestu, jaką był ogólnomiejski strajk.</p>
                 </div>
                 <div class="stat-group">
                     <div class="stat-item">
-                        <div class="stat-num">12 marca</div>
-                        <div class="stat-desc">Data śmierci Bolesława Bieruta.</div>
+                        <div class="stat-num red">ZISPO</div>
+                        <div class="stat-desc">Zakłady im. Józefa Stalina, miejsce zatrudnienia sfrustrowanych
+                            pracowników.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Nędza</div>
+                        <div class="stat-desc">Wyśrubowane normy pracy i niedostateczne płace.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Podatki</div>
+                        <div class="stat-desc">Niesprawiedliwe pobieranie podatku od wynagrodzeń.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Slide 5 -->
+        <!-- Slide 9: Split Alt -->
         <section class="slide">
-            <div class="grid-layout">
+            <div class="layout-split-alt">
+                <div class="huge-stat-container">
+                    <div class="huge-stat" style="color: var(--text-color);">28.06</div>
+                </div>
+                <div class="split-content">
+                    <span class="date-marker">Początek buntu</span>
+                    <h2>Wybuch Poznańskiego Czerwca - 28 czerwca 1956 roku</h2>
+                    <p>W czwartek 28 czerwca 1956 roku o godzinie szóstej rano w zakładach ZISPO wybuchł masowy strajk
+                        generalny. Tysiące robotników porzuciło swoje stanowiska pracy i uformowało długą kolumnę
+                        marszową zmierzającą do centrum miasta. Do protestujących fabrykantów ze sporym entuzjazmem
+                        dołączały załogi innych poznańskich zakładów oraz liczni mieszkańcy. Wielotysięczny tłum
+                        przemaszerował pod siedzibę Miejskiej Rady Narodowej oraz Zamek Czeski, gdzie mieściły się
+                        władze. Manifestanci nieśli biało-czerwone sztandary oraz transparenty z hasłami domagającymi
+                        się chleba, wolności i podwyżki płac. W tym samym czasie w Poznaniu trwały Międzynarodowe Targi
+                        Poznańskie, co umożliwiło zagranicznym gościom obserwację protestu. Pokojowa z początku
+                        demonstracja szybko przekształciła się w wielki protest o charakterze wybitnie
+                        antykomunistycznym. Zniecierpliwiony brakiem reakcji władz tłum zaczął opanowywać budynki
+                        użyteczności publicznej, w tym więzienie przy ulicy Młyńskiej.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Grid -->
+        <section class="slide">
+            <div class="layout-grid">
                 <div>
-                    <span class="date-marker">Wiosna 1956</span>
-                    <h2>Puste cele</h2>
-                    <p>Partia ogłasza wielką amnestię. Otwierają się bramy stalinowskich więzień dla weteranów Armii Krajowej i ofiar politycznych procesów pokazowych.</p>
+                    <span class="date-marker">Krwawa pacyfikacja</span>
+                    <h2>Eskalacja walk w Poznaniu i interwencja wojska</h2>
+                    <p>Sytuacja w Poznaniu przybrała tragiczny obrót, gdy grupa demonstrantów udała się pod budynek
+                        Wojewódzkiego Urzędu do spraw Bezpieczeństwa Publicznego. Z okien gmachu bezpieki padły pierwsze
+                        śmiertelne strzały skierowane bezpośrednio w stronę zgromadzonych cywilów. Wywołało to potężne
+                        oburzenie tłumu, który zdobył broń z posterunków milicyjnych oraz rozbitego więzienia. Na
+                        ulicach miasta rozpoczęły się wielogodzinne walki zbrojne pomiędzy manifestantami a siłami
+                        bezpieczeństwa. Władze w Warszawie uznały bunt za wywrotową próbę obalenia ustroju i podjęły
+                        decyzję o użyciu wojska. Do Poznania skierowano ponad dziesięć tysięcy żołnierzy oraz setki
+                        czołgów i wozów bojowych pod dowództwem generała Stanisława Popławskiego. Pacyfikacja miasta
+                        była brutalna - wojsko użyło ostrej amunicji przeciwko walczącym oraz przypadkowym przechodniom.
+                        Najmłodszą i najbardziej symboliczną ofiarą śmiertelną starć stał się trzynastoletni chłopiec,
+                        Romek Strzałkowski.</p>
                 </div>
                 <div class="stat-group">
                     <div class="stat-item">
-                        <div class="stat-num">35 000</div>
-                        <div class="stat-desc">Osób zwolnionych w ramach amnestii.</div>
+                        <div class="stat-num red">10 000</div>
+                        <div class="stat-desc">Żołnierzy wojska rzuconych na Poznań.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num red">Czołgi</div>
+                        <div class="stat-desc">Setki wozów bojowych skierowanych przeciwko demonstrantom.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Romek</div>
+                        <div class="stat-desc">Trzynastoletni Romek Strzałkowski, najmłodsza i najbardziej symboliczna
+                            ofiara.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Slide 6 -->
+        <!-- Slide 11: Background Typography -->
         <section class="slide">
-            <div class="center-layout">
-                <span class="date-marker">Czerwiec 1956</span>
-                <h2>Wybuch w Poznaniu</h2>
-                <p>Robotnicy Zakładów Cegielskiego przerywają pracę. Żądają zwrotu niesłusznie pobieranego podatku, godziwych płac i wolności. Zaczyna się Poznański Czerwiec.</p>
+            <div class="layout-bg-type">
+                <div class="bg-text">OFIARY</div>
+                <div class="content-box">
+                    <span class="date-marker">Bariera strachu złamana</span>
+                    <h2>Skutki Poznańskiego Czerwca i bilans ofiar</h2>
+                    <p>Bilans Poznańskiego Czerwca okazał się tragiczny i wstrząsnął całą opinią publiczną w Polsce oraz
+                        na świecie. W wyniku starć ulicznych i ostrzału wojskowego zginęło co najmniej pięćdziesiąt
+                        siedem osób, choć niektóre źródła szacują liczbę ofiar wyżej. Rannych zostało ponad kilkuset
+                        obywateli, z których wielu zostało trwale kalekami na całe życie. Po stłumieniu buntu aparaty
+                        siłowe przystąpiły do masowych, brutalnych aresztowań podejrzanych uczestników wydarzeń. Do
+                        aresztów trafiło ponad siedemset osób, które poddawano biciu oraz przesłuchaniom wymuszającym
+                        przyznanie się do winy. Premier Józef Cyrankiewicz w słynnym przemówieniu radiowym groził, że
+                        władza odrąbie każdą rękę podniesioną przeciwko państwu. Oficjalna propaganda próbowała
+                        przedstawić zryw jako prowokację zagranicznych agentów i elementów chuligańskich. Mimo klęski
+                        militarnej Poznański Czerwiec złamał barierę strachu i uświadomił komunistom konieczność
+                        przeprowadzenia ustępstw.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Slide 7 -->
+        <!-- Slide 12: Bottom -->
         <section class="slide">
-            <div class="grid-layout">
+            <div class="layout-bottom">
+                <span class="date-marker">Trybuna wolności</span>
+                <h2>Procesy Poznańskie i przełomowa linia obrony</h2>
+                <p>Jesienią 1956 roku w Poznaniu rozpoczęły się procesy sądowe uczestników czerwcowych protestów
+                    ulicznych. Władze początkowo planowały przeprowadzenie wyroków pokazowych, które miały odstraszyć
+                    społeczeństwo od dalszych buntów. Sytuacja polityczna w kraju zmieniła się jednak na tyle, że
+                    procesy przybrały absolutnie nieoczekiwany obrót. Adwokaci oskarżonych, na czele z mecenasem
+                    Stanisławem Hejmowskim, zaprezentowali niezwykle odważną i profesjonalną linię obrony. Obrońcy
+                    udowodnili przed sądem, że bezpośrednią przyczyną zrywu była nędza materialna oraz bezduszność
+                    urzędników. Na sali sądowej głośno mówiono o przestępstwach popełnianych przez funkcjonariuszy
+                    Urzędu Bezpieczeństwa podczas pacyfikacji. W efekcie sądy wydały zaskakująco niskie wyroki, a
+                    większość oskarżonych została wkrótce zwolniona z więzień. Procesy poznańskie stały się wielkim
+                    moralnym i prawnym sukcesem społeczeństwa walczącego o prawdę historyczną.</p>
+            </div>
+        </section>
+
+        <!-- Slide 13: Center -->
+        <section class="slide">
+            <div class="layout-center">
+                <span class="date-marker">Powrót po latach</span>
+                <h2>Narastanie kryzysu jesienią i powrót Władysława Gomułki</h2>
+                <p>Wydarzenia poznańskie pogłębiły kryzys polityczny wewnątrz kierownictwa PZPR i zademonstrowały
+                    słabość dotychczasowych liderów. Wśród obywateli i działaczy niższych szczebli partyjnych narastało
+                    przekonanie o konieczności wyznaczenia nowego przywódcy. Jedyną postacią zdolną do zjednoczenia
+                    podzielonej partii i uspokojenia nastrojów społecznych wydawał się Władysław Gomułka. Gomułka był
+                    byłym I sekretarzem PPR, który w latach stalinowskich został odsunięty od władzy i uwięziony za tak
+                    zwane odchylenie prawicowo-nacjonalistyczne. Jego postać kojarzyła się społeczeństwu z oporem wobec
+                    dyktatu Moskwy oraz poszukiwaniem polskiej drogi do socjalizmu. Prowadzono wielotygodniowe, tajne
+                    rokowania polityczne dotyczące warunków powrotu Gomułki do ścisłego kierownictwa KC PZPR. Gomułka
+                    stawiał twarde warunki, domagając się odsunięcia twardogłowych stalinowców oraz przyznania mu pełnej
+                    swobody decyzyjnej. Presja społeczna oraz groźba kolejnych niekontrolowanych strajków zmusiły władze
+                    do ustępstw na rzecz Gomułki.</p>
+                <div class="dramatic-line" style="max-width: 300px; margin-left: auto; margin-right: auto;"></div>
+            </div>
+        </section>
+
+        <!-- Slide 14: Center -->
+        <section class="slide">
+            <div class="layout-center">
+                <span class="date-marker">Dramatyczne negocjacje</span>
+                <h2>VIII Plenum KC PZPR i niezapowiedziana wizyta Chruszczowa</h2>
+                <p>Obrady przełomowego VIII Plenum Komitetu Centralnego PZPR rozpoczęły się w Warszawie 19 października
+                    1956 roku. Celem obrad miało być oficjalne wybranie Władysława Gomułki na stanowisko I sekretarza
+                    oraz uchwalenie programu reform. W tym samym czasie bez zapowiedzi do Warszawy przyleciała wysoka
+                    delegacja radziecka z Nikitą Chruszczowem na czele. Radzieccy przywódcy byli przerażeni rozwojem
+                    wypadków w Polsce i obawiali się utraty kontroli nad państwem satelickim. Jednocześnie stacjonujące
+                    w Polsce wojska radzieckie rozpoczęły groźne manewry i marsz w kierunku stolicy. W Warszawie
+                    panowało ogromne napięcie, a robotnicy w fabrykach i studenci organizowali wiece poparcia dla zmian.
+                    Gomułka zdecydowanie sprzeciwił się naciskom Chruszczowa, zapewniając go jednocześnie o trwałości
+                    sojuszu z ZSRR. Po burzliwych nocnych rokowaniach Chruszczow ustąpił i wydał rozkaz powrotu wojsk
+                    radzieckich do baz.</p>
+            </div>
+        </section>
+
+        <!-- Slide 15: Background Typography -->
+        <section class="slide">
+            <div class="layout-bg-type">
+                <div class="bg-text">PAŹDZIERNIK</div>
+                <div class="content-box">
+                    <span class="date-marker">Przełom</span>
+                    <h2>Wybór Gomułki i wybuch powszechnej radości społecznej</h2>
+                    <p>Dnia 21 października 1956 roku VIII Plenum KC PZPR oficjalnie wybrało Władysława Gomułkę na I
+                        sekretarza. Wydarzenie to zostało powitane przez polskie społeczeństwo z niespotykanym dotąd
+                        entuzjazmem i wybuchem powszechnej radości. Obywatele traktowali Gomułkę jako bohatera
+                        narodowego, który obronił suwerenność Polski przed radziecką interwencją. W całym kraju odbywały
+                        się masowe wiece, zgromadzenia oraz pochody poparcia dla nowo wybranego kierownictwa partii. W
+                        stoczniach, fabrykach i na uczelniach wyższych uchwalano setki rezolucji wyrażających wiarę w
+                        naprawę Rzeczypospolitej. W atmosferze powszechnego uniesienia wierzono, że następuje prawdziwy
+                        koniec dyktatury komunistycznej w Polsce. Gomułka zyskał olbrzymi mandat zaufania społecznego,
+                        jakiego nie posiadał żaden inny komunistyczny rządca w historii PRL. Rozpoczął się krótki okres
+                        nazywany Polskim Październikiem, pełen nadziei na przebudowę ustroju i poprawę jakości życia.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 16: Grid -->
+        <section class="slide">
+            <div class="layout-grid">
                 <div>
-                    <h2>Marsz głodnych</h2>
-                    <p>Strajk ekonomiczny błyskawicznie przeradza się w manifestację polityczną. Tłum rusza na komitet wojewódzki partii i gmach bezpieki.</p>
+                    <span class="date-marker">Kulminacja Października</span>
+                    <h2>Historyczny wiec na Placu Defilad - 24 października 1956</h2>
+                    <p>Kulminacyjnym momentem Polskiego Października stał się gigantyczny wiec zorganizowany 24
+                        października na Placu Defilad w Warszawie. Na placu przed Pałacem Kultury i Nauki zgromadziło
+                        się około czterystu tysięcy mieszkańców stolicy i przybyszy z całej Polski. Władysław Gomułka
+                        wygłosił wówczas swoje najbardziej słynne przemówienie polityczne, transmitowane przez radio na
+                        cały kraj. W swoim wystąpieniu skrytykował błędne metody rządzenia z okresu stalinowskiego oraz
+                        potępił wypaczenia gospodarcze. Zapowiedział przeprowadzenie głębokich reform, rozwój
+                        samorządności robotniczej oraz przestrzeganie praworządności. Jednocześnie Gomułka apetycznie
+                        wezwał zebranych do powrotu do codziennej pracy i zaprzestania dalszych manifestacji. Słowa o
+                        potrzebie uspokojenia nastrojów sygnalizowały, że nowe władze chcą szybko wyznaczyć granice
+                        dozwolonych przemian. Mimo to zgromadzony tłum reagował żywiołowymi owacjami, odśpiewując nowemu
+                        liderowi tradycyjne 'Sto lat'.</p>
                 </div>
                 <div class="stat-group">
                     <div class="stat-item">
-                        <div class="stat-num">100 tys.</div>
-                        <div class="stat-desc">Protestujących na ulicach miasta.</div>
+                        <div class="stat-num">24.10</div>
+                        <div class="stat-desc">Data pamiętnego wiecu poparcia.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num red">400 tys.</div>
+                        <div class="stat-desc">Liczba zgromadzonych wokół Pałacu Kultury.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">Sto lat</div>
+                        <div class="stat-desc">Tradycyjna pieśń odśpiewana I sekretarzowi.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Slide 8 -->
+        <!-- Slide 17: Center -->
         <section class="slide">
-            <div class="grid-layout">
+            <div class="layout-center">
+                <span class="date-marker">Nowy kompromis</span>
+                <h2>Uwolnienie Prymasa Stefana Wyszyńskiego i zwrot w relacjach z Kościołem</h2>
+                <p>Jedną z najważniejszych decyzji nowych władz podjętych pod naciskiem społecznym było uwolnienie
+                    internowanego Prymasa Polski. Kardynał Stefan Wyszyński przebywał w więzieniu i miejscach
+                    odosobnienia od września 1953 roku. Dnia 28 października 1956 roku Prymas odzyskał wolność i
+                    powrócił do Warszawy, obejmując ponownie swoje obowiązki. Przywrócenie Wyszyńskiego na czoło
+                    Kościoła katolickiego w Polsce było ogromnym sukcesem milionów wiernych obywateli. Nowe władze
+                    zawarły historyczny kompromis ze stolicą apostolską i episkopatem, regulujący wzajemne stosunki
+                    państwo-Kościół. Zezwolono na ponowne nauczanie religii w szkołach publicznych oraz przywrócono
+                    prasę i wydawnictwa katolickie. Anulowano dekret o obsadzaniu duchownych stanowisk kościelnych przez
+                    organy państwowe, przywracając niezależność Kościoła. Porozumienie to pozwoliło ustabilizować
+                    sytuację wewnętrzną w kraju i zabezpieczyło praworządność praktyk religijnych.</p>
+                <div class="dramatic-line" style="max-width: 400px; margin-left: auto; margin-right: auto;"></div>
+            </div>
+        </section>
+
+        <!-- Slide 18: Split Alt -->
+        <section class="slide">
+            <div class="layout-split-alt">
+                <div class="huge-stat-container">
+                    <div class="huge-stat">80%</div>
+                </div>
+                <div class="split-content">
+                    <span class="date-marker">Przemiany na wsi</span>
+                    <h2>Dekolektywizacja rolnictwa i wycofanie się z przymusowych spółdzielni</h2>
+                    <p>Polski Październik przyniósł natychmiastowe i rewolucyjne zmiany w strukturze polskiej wsi oraz
+                        rolnictwa. Władze zrezygnowały z przymusowej kolektywizacji, która była sztucznie narzucana na
+                        wzór radzieckich kołchozów. W ciągu zaledwie kilku tygodni jesieni 1956 roku rozpadło się ponad
+                        osiemdziesiąt procent istniejących spółdzielni produkcyjnych. Chłopi odzyskiwali swoją prywatną
+                        ziemię, żywy inwentarz oraz narzędzia rolnicze wcześniej zabrane przez państwo. Ograniczono
+                        dotkliwy system obowiązkowych dostaw produktów rolnych po nierynkowych, zaniżonych cenach
+                        państwowych. Prywatne rolnictwo indywidualne stało się dominującym sektorem polskiej gospodarki
+                        wiejskiej na tle reszty bloku wschodniego. Decyzja ta uratowała polską wieś przed klęską głodu
+                        oraz znacząco poprawiła zaopatrzenie miast w żywność. Odwrócenie kolektywizacji stanowiło jedno
+                        z najbardziej trwałych i odczuwalnych osiągnięć wydarzeń 1956 roku.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 19: Grid -->
+        <section class="slide">
+            <div class="layout-grid">
                 <div>
-                    <span class="date-marker">28 Czerwca 1956</span>
-                    <h2>Ogień i krew</h2>
-                    <p>Władza odpowiada siłą. Wojsko wjeżdża do Poznania z rozkazem stłumienia protestu. Padają strzały, rozpoczynają się ciężkie walki uliczne, w których biorą udział cywile.</p>
+                    <span class="date-marker">Odzyskiwanie podmiotowości</span>
+                    <h2>Relacje z ZSRR - Odsunięcie radzieckich wojskowych i umowa o stacjonowaniu</h2>
+                    <p>Po wydarzeniach Października nastąpiła gruntowna renegocjacja dotychczasowych poddańczych relacji
+                        pomiędzy Warszawą a Moskwą. Z wojska polskiego odwołano radzieckiego marszałka Konstantego
+                        Rokossowskiego, który pełnił funkcję Ministra Obrony Narodowej. Wraz z nim z Polski wyjechały
+                        setki radzieckich oficerów zajmujących kluczowe stanowiska w dowództwie Wojska Polskiego.
+                        Stanowiska dowódcze przejęli polscy oficerowie, w tym więzieni wcześniej w czasach stalinowskich
+                        generałowie. W grudniu 1956 roku podpisano polsko-radziecką umowę o statusie prawnym wojsk
+                        radzieckich stacjonujących w Polsce. Dokument ten ograniczył swobodę ruchów jednostek
+                        radzieckich i uzależnił ich dyslokację od zgody władz polskich. Anulowano również niekorzystne
+                        umowy handlowe, m.in. dotyczące dostaw polskiego węgla do ZSRR po zaniżonych cenach. Zmiany te
+                        doprowadziły do częściowego odzyskania podmiotowości Polski na arenie międzynarodowej w ramach
+                        bloku.</p>
                 </div>
                 <div class="stat-group">
                     <div class="stat-item">
-                        <div class="stat-num">10 000</div>
-                        <div class="stat-desc">Żołnierzy Ludowego Wojska Polskiego i KBW pacyfikujących Poznań.</div>
+                        <div class="stat-num">Odejście</div>
+                        <div class="stat-desc">Odwołanie radzieckiego marszałka Rokossowskiego i setek oficerów z armii
+                            polskiej.</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-num">400</div>
-                        <div class="stat-desc">Czołgów i transporterów opancerzonych użytych przeciwko własnym obywatelom.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 9 -->
-        <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h2>Bilans tragedii</h2>
-                    <p>Pacyfikacja kończy się rzezią. Symbolem wydarzeń staje się Romek Strzałkowski, 13-letni chłopiec zastrzelony podczas protestów. Szpitale pękają w szwach od rannych.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num red">58</div>
-                        <div class="stat-desc">Ofiar śmiertelnych Czerwca '56.</div>
+                        <div class="stat-num">Umowa</div>
+                        <div class="stat-desc">Dokument określający ramy stacjonowania wojsk radzieckich, podpisany w
+                            grudniu 1956 r.</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-num">650</div>
-                        <div class="stat-desc">Osób rannych w starciach.</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-num">746</div>
-                        <div class="stat-desc">Aresztowanych przez służby.</div>
+                        <div class="stat-num">Handel</div>
+                        <div class="stat-desc">Anulowanie niezwykle krzywdzących umów na dostawy polskiego węgla do
+                            ZSRR.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Slide 10 -->
+        <!-- Slide 20: Center -->
         <section class="slide">
-            <div class="center-layout">
-                <h2>Pęknięcie władzy</h2>
-                <p>Rozlew krwi w Poznaniu powoduje potężny wstrząs wewnątrz PZPR. Władza dzieli się na dwa rywalizujące obozy: reformatorskich "Puławian" i konserwatywnych "Natolińczyków".</p>
-                <div class="dramatic-line"></div>
+            <div class="layout-center">
+                <span class="date-marker">Podsumowanie</span>
+                <h2>Bilans roku 1956, powolny odwrót od reform i dziedzictwo</h2>
+                <p>Rok 1956 w Polsce przyniósł głęboki przełom społeczno-polityczny i doprowadził do trwałego demontażu
+                    najgorszych cech stalinizmu. Obywatele odzyskali poczucie godności, a aparat państwowy musiał
+                    zrezygnować z masowego, bezpośredniego terroru fizycznego. Zlikwidowano przymusową kolektywizację
+                    wsi oraz wywalczono unikalny margines wolności dla Kościoła i kultury. Jednakże wywalczone swoboda
+                    obywatelskie okazały się nietrwałe, a proces odwilży został szybko zahamowany przez władze. Już w
+                    1957 roku Gomułka zaczął stopniowo przywracać cenzurę, zamykając między innymi zasłużony tygodnik
+                    'Po prostu'. Mimo powrotu do autorytarnych metod rządzenia, system komunistyczny w Polsce nigdy nie
+                    powrócił do stalinowskiego terroru. Pamięć o Poznańskim Czerwcu oraz Październiku '56 stała się
+                    fundamentem dla późniejszych zrywów wolnościowych. Doświadczenia tego przełomowego roku
+                    ukształtowały pokolenie, które w przyszłości stworzyło ruch 'Solidarności' i obaliło komunizm.</p>
             </div>
         </section>
 
-        <!-- Slide 11 -->
+        <!-- Slide 22: Bibliography -->
         <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h2>Wiesław wraca</h2>
-                    <p>Jedynym wyjściem z kryzysu staje się Władysław Gomułka (ps. Wiesław). Niedawny więzień bezpieki jest w oczach społeczeństwa jedynym wiarygodnym komunistą, niosącym obietnicę zmian.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num">3 lata</div>
-                        <div class="stat-desc">Gomułka spędził w stalinowskim areszcie (1951-1954).</div>
-                    </div>
-                </div>
+            <div class="layout-center">
+                <span class="date-marker">Źródła</span>
+                <h2>Bibliografia</h2>
+                <ul
+                    style="list-style: none; text-align: left; font-size: 1.1rem; color: var(--muted-color); display: inline-block; margin-top: 1rem; line-height: 1.8;">
+                    <li><strong style="color: var(--accent-color);">1.</strong> Paczkowski A., <i>Pół wieku dziejów
+                            Polski</i>, Warszawa 2000.</li>
+                    <li><strong style="color: var(--accent-color);">2.</strong> Eisler J., <i>Polski rok 1956</i>,
+                        Warszawa 1990.</li>
+                    <li><strong style="color: var(--accent-color);">3.</strong> Machcewicz P., <i>Polski rok 1956</i>,
+                        Warszawa 1993.</li>
+                    <li><strong style="color: var(--accent-color);">4.</strong> Friszke A., <i>Polska. Losy państwa i
+                            narodu 1939-1989</i>, Warszawa 2003.</li>
+                </ul>
+                <div class="dramatic-line" style="max-width: 300px; margin-left: auto; margin-right: auto;"></div>
             </div>
         </section>
 
-        <!-- Slide 12 -->
+        <!-- Slide 23: Internet Sources -->
         <section class="slide">
-            <div class="center-layout">
-                <span class="date-marker">Październik 1956</span>
-                <h2>VIII Plenum</h2>
-                <p>Historyczne obrady KC PZPR, na których Gomułka ma przejąć władzę. To moment krytyczny – Sowieci z niepokojem patrzą na próby usamodzielnienia się Polski.</p>
+            <div class="layout-center">
+                <span class="date-marker">Internet</span>
+                <h2>Źródła Internetowe</h2>
+                <ul
+                    style="list-style: none; text-align: left; font-size: 0.95rem; color: var(--muted-color); display: inline-block; margin-top: 1rem; line-height: 1.5; max-width: 900px;">
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">1.</strong> Wideo -
+                        Poznański Czerwiec '56:<br><a href="https://www.youtube.com/watch?v=w0oY7Fkei88" target="_blank"
+                            style="color: #666; text-decoration: none;">https://www.youtube.com/watch?v=w0oY7Fkei88</a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">2.</strong> IPN -
+                        Przebieg Poznańskiego Czerwca 1956:<br><a
+                            href="https://edukacja.ipn.gov.pl/edu/oben/poznan/materialy-edukacyjne/infografiki/106034,Poznanski-Czerwiec-1956-r.html"
+                            target="_blank"
+                            style="color: #666; text-decoration: none;">https://edukacja.ipn.gov.pl/...</a></li>
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">3.</strong> IPN -
+                        Materiały archiwalne i fotograficzne Czerwiec '56:<br><a
+                            href="https://ipn.gov.pl/pl/dla-mediow/materialy-do-pobrania/187302,Poznanski-Czerwiec-56-materialy-IPN.html"
+                            target="_blank" style="color: #666; text-decoration: none;">https://ipn.gov.pl/pl/...</a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">4.</strong> Dzieje.pl
+                        - Październik '56 i wybór Gomułki:<br><a
+                            href="https://dzieje.pl/aktualnosci/60-rocznica-pazdziernika-56" target="_blank"
+                            style="color: #666; text-decoration: none;">https://dzieje.pl/aktualnosci/60-rocznica-pazdziernika-56</a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">5.</strong> Dzieje.pl
+                        - Przegląd tematyczny Polski Październik:<br><a href="https://dzieje.pl/tag/polski-pazdziernik"
+                            target="_blank"
+                            style="color: #666; text-decoration: none;">https://dzieje.pl/tag/polski-pazdziernik</a>
+                    </li>
+                    <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent-color);">6.</strong> Dzieje.pl
+                        - Pacyfikacja i tło buntu w Poznaniu:<br><a
+                            href="https://dzieje.pl/aktualnosci/poznanski-czerwiec-56" target="_blank"
+                            style="color: #666; text-decoration: none;">https://dzieje.pl/aktualnosci/poznanski-czerwiec-56</a>
+                    </li>
+                    <li><strong style="color: var(--accent-color);">7.</strong> Polskie Radio - Odwilż '56 i relacje
+                        państwo-Kościół:<br><a
+                            href="https://www.polskieradio.pl/87/1129/Artykul/369802,Rozne-metody-Gomulki-i-Gierka"
+                            target="_blank"
+                            style="color: #666; text-decoration: none;">https://www.polskieradio.pl/...</a></li>
+                </ul>
             </div>
         </section>
 
-        <!-- Slide 13 -->
+        <!-- Slide 24: Outro -->
         <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h2>O krok od wojny</h2>
-                    <p>Sowieckie dywizje w Polsce ruszają na Warszawę. Na lotnisku ląduje rozwścieczony Nikita Chruszczow. Radzieckie dowództwo grozi siłowym zdławieniem polskich przemian.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num">2</div>
-                        <div class="stat-desc">Dywizje pancerne Armii Radzieckiej opuściły swoje bazy kierując się na Warszawę.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 14 -->
-        <section class="slide">
-            <div class="center-layout">
-                <h2>Ryzyko interwencji zażegnane</h2>
-                <p>Po niezwykle trudnych i twardych negocjacjach Gomułce udaje się przekonać Chruszczowa. Polska pozostaje w bloku wschodnim, ale zyskuje gwarancję wewnętrznej samodzielności.</p>
-            </div>
-        </section>
-
-        <!-- Slide 15 -->
-        <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <span class="date-marker">24 Października 1956</span>
-                    <h2>Polski Październik</h2>
-                    <p>Największy zryw entuzjazmu w historii PRL. Setki tysięcy warszawiaków gromadzą się na wiecu, wiwatując na cześć Gomułki. Zaczyna się krótki okres niespotykanej wolności słowa.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num">400 tys.</div>
-                        <div class="stat-desc">Osób zgromadzonych na Placu Defilad by słuchać przemówienia.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 16 -->
-        <section class="slide">
-            <div class="center-layout">
-                <h2>Skutki Odwilży</h2>
-                <p>Koniec przymusowej kolektywizacji rolnictwa, uwolnienie kardynała Wyszyńskiego z internowania i usunięcie radzieckich marszałków z polskiego wojska. To najważniejsze zdobycze Października.</p>
-                <div class="dramatic-line"></div>
-            </div>
-        </section>
-
-        <!-- Slide 17 -->
-        <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h2>Dramat na Węgrzech</h2>
-                    <p>Gdy Polska cieszy się swoimi zdobyczami, węgierskie próby reform kończą się sowiecką inwazją i masakrą w Budapeszcie. Polacy masowo oddają krew dla bratniego narodu.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num red">3 000</div>
-                        <div class="stat-desc">Zabitych Węgrów w wyniku radzieckiej interwencji zbrojnej.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 18 -->
-        <section class="slide">
-            <div class="center-layout">
-                <h2>Mała Stabilizacja</h2>
-                <p>Okres wolności nie trwa długo. Zaledwie po roku Gomułka zaczyna zamykać reformatorskie pisma. Władza wraca do autorytarnych nawyków, choć stalinizm znika na zawsze.</p>
-            </div>
-        </section>
-
-        <!-- Slide 19 -->
-        <section class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h2>Dziedzictwo 1956</h2>
-                    <p>Mimo rozczarowania rządami Gomułki, bunt robotników w Poznaniu udowodnił, że władza komunistyczna musi liczyć się ze społeczeństwem. To tutaj zasiano ziarno pod Sierpień '80.</p>
-                </div>
-                <div class="stat-group">
-                    <div class="stat-item">
-                        <div class="stat-num">24 lata</div>
-                        <div class="stat-desc">Oddzieliły Poznański Czerwiec od powstania Niezależnego Samorządnego Związku Zawodowego "Solidarność".</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Slide 20 -->
-        <section class="slide">
-            <div class="center-layout">
+            <div class="layout-center">
                 <h1>Dziękuję</h1>
-                <p>Za uwagę.</p>
+                <p>Koniec prezentacji.</p>
             </div>
         </section>
 
@@ -480,7 +976,7 @@
 
     <div class="controls-capsule">
         <button id="btn-prev">WSTECZ</button>
-        <div class="counter"><span id="current-slide">1</span> / <span id="total-slides">20</span></div>
+        <div class="counter"><span id="current-slide">1</span> / <span id="total-slides">24</span></div>
         <button id="btn-next">DALEJ</button>
     </div>
 
@@ -492,7 +988,7 @@
             const totalSlidesEl = document.getElementById('total-slides');
             const btnPrev = document.getElementById('btn-prev');
             const btnNext = document.getElementById('btn-next');
-            
+
             let currentIndex = 0;
             totalSlidesEl.textContent = totalSlides;
 
@@ -504,7 +1000,7 @@
                         slide.classList.remove('active');
                     }
                 });
-                
+
                 currentSlideEl.textContent = currentIndex + 1;
                 btnPrev.disabled = currentIndex === 0;
                 btnNext.disabled = currentIndex === totalSlides - 1;
@@ -528,7 +1024,7 @@
                 e.stopPropagation();
                 nextSlide();
             });
-            
+
             btnPrev.addEventListener('click', (e) => {
                 e.stopPropagation();
                 prevSlide();
@@ -553,4 +1049,5 @@
         });
     </script>
 </body>
+
 </html>
