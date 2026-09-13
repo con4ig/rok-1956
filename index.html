@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rok 1956 w Polsce</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+        :root {
+            --bg-color: #0f0f0f;
+            --text-color: #e5e5e5;
+            --muted-color: #888888;
+            --accent-color: #d32f2f;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .slides-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease-out;
+            padding: 5vw;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1400px;
+            align-items: center;
+        }
+
+        .center-layout {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        /* Typography */
+        h1, h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(4rem, 8vw, 8rem);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: clamp(3rem, 5vw, 5rem);
+            margin-bottom: 2rem;
+        }
+
+        p {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            line-height: 1.5;
+            color: var(--muted-color);
+            max-width: 35ch;
+        }
+
+        .center-layout p {
+            margin: 0 auto;
+            max-width: 45ch;
+        }
+
+        .date-marker {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Stats Editorial Style */
+        .stat-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .stat-item {
+            border-top: 2px solid #222;
+            padding-top: 1rem;
+        }
+
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 6vw, 7rem);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-num.red {
+            color: var(--accent-color);
+        }
+
+        .stat-desc {
+            font-size: 1.1rem;
+            color: var(--muted-color);
+        }
+
+        /* Nav Capsule */
+        .controls-capsule {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 100;
+            background: #1a1a1a;
+            padding: 0.5rem 1rem;
+            border-radius: 4px; /* Harder corners, not a pill */
+        }
+
+        .controls-capsule button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .controls-capsule button:hover {
+            color: var(--accent-color);
+        }
+
+        .controls-capsule button:disabled {
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        .counter {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: #888;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Simple dramatic line */
+        .dramatic-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin-top: 2rem;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+        }
+
+        .slide.active .dramatic-line {
+            transform: scaleX(1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="slides-container" id="slides-container">
+
+        <!-- Slide 1 -->
+        <section class="slide active">
+            <div class="center-layout">
+                <h1>1956</h1>
+                <h2>Przełom i Nadzieja</h2>
+                <p>Historia buntu, który wstrząsnął posadami systemu komunistycznego w Polsce.</p>
+                <div class="dramatic-line"></div>
+                <p style="margin-top: 2rem; font-size: 1rem;">Autor: Szymon</p>
+            </div>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <span class="date-marker">1953</span>
+                    <h2>Koniec ery Stalina</h2>
+                    <p>Śmierć radzieckiego dyktatora rozpoczyna powolny proces zmian. Terror słabnie, a w państwach satelickich rodzi się nadzieja na odwilż i złagodzenie represji.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">3 lata</div>
+                        <div class="stat-desc">Zajęło partii komunistycznej w Polsce odczucie realnych zmian po śmierci Stalina.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide">
+            <div class="center-layout">
+                <span class="date-marker">Luty 1956</span>
+                <h2>XX Zjazd KPZR</h2>
+                <p>Nikita Chruszczow w tajnym referacie potępia kult jednostki. Szokujący dokument szybko obiega Polskę, prowokując społeczeństwo do zadawania trudnych pytań władzy.</p>
+            </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Wakat na szczycie</h2>
+                    <p>Miesiąc po moskiewskim zjeździe w niejasnych okolicznościach umiera Bolesław Bierut, dotychczasowy I sekretarz PZPR. Władzę przejmuje Edward Ochab.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">12 marca</div>
+                        <div class="stat-desc">Data śmierci Bolesława Bieruta.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <span class="date-marker">Wiosna 1956</span>
+                    <h2>Puste cele</h2>
+                    <p>Partia ogłasza wielką amnestię. Otwierają się bramy stalinowskich więzień dla weteranów Armii Krajowej i ofiar politycznych procesów pokazowych.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">35 000</div>
+                        <div class="stat-desc">Osób zwolnionych w ramach amnestii.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide">
+            <div class="center-layout">
+                <span class="date-marker">Czerwiec 1956</span>
+                <h2>Wybuch w Poznaniu</h2>
+                <p>Robotnicy Zakładów Cegielskiego przerywają pracę. Żądają zwrotu niesłusznie pobieranego podatku, godziwych płac i wolności. Zaczyna się Poznański Czerwiec.</p>
+            </div>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Marsz głodnych</h2>
+                    <p>Strajk ekonomiczny błyskawicznie przeradza się w manifestację polityczną. Tłum rusza na komitet wojewódzki partii i gmach bezpieki.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">100 tys.</div>
+                        <div class="stat-desc">Protestujących na ulicach miasta.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <span class="date-marker">28 Czerwca 1956</span>
+                    <h2>Ogień i krew</h2>
+                    <p>Władza odpowiada siłą. Wojsko wjeżdża do Poznania z rozkazem stłumienia protestu. Padają strzały, rozpoczynają się ciężkie walki uliczne, w których biorą udział cywile.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">10 000</div>
+                        <div class="stat-desc">Żołnierzy Ludowego Wojska Polskiego i KBW pacyfikujących Poznań.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">400</div>
+                        <div class="stat-desc">Czołgów i transporterów opancerzonych użytych przeciwko własnym obywatelom.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Bilans tragedii</h2>
+                    <p>Pacyfikacja kończy się rzezią. Symbolem wydarzeń staje się Romek Strzałkowski, 13-letni chłopiec zastrzelony podczas protestów. Szpitale pękają w szwach od rannych.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num red">58</div>
+                        <div class="stat-desc">Ofiar śmiertelnych Czerwca '56.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">650</div>
+                        <div class="stat-desc">Osób rannych w starciach.</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">746</div>
+                        <div class="stat-desc">Aresztowanych przez służby.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10 -->
+        <section class="slide">
+            <div class="center-layout">
+                <h2>Pęknięcie władzy</h2>
+                <p>Rozlew krwi w Poznaniu powoduje potężny wstrząs wewnątrz PZPR. Władza dzieli się na dwa rywalizujące obozy: reformatorskich "Puławian" i konserwatywnych "Natolińczyków".</p>
+                <div class="dramatic-line"></div>
+            </div>
+        </section>
+
+        <!-- Slide 11 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Wiesław wraca</h2>
+                    <p>Jedynym wyjściem z kryzysu staje się Władysław Gomułka (ps. Wiesław). Niedawny więzień bezpieki jest w oczach społeczeństwa jedynym wiarygodnym komunistą, niosącym obietnicę zmian.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">3 lata</div>
+                        <div class="stat-desc">Gomułka spędził w stalinowskim areszcie (1951-1954).</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12 -->
+        <section class="slide">
+            <div class="center-layout">
+                <span class="date-marker">Październik 1956</span>
+                <h2>VIII Plenum</h2>
+                <p>Historyczne obrady KC PZPR, na których Gomułka ma przejąć władzę. To moment krytyczny – Sowieci z niepokojem patrzą na próby usamodzielnienia się Polski.</p>
+            </div>
+        </section>
+
+        <!-- Slide 13 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>O krok od wojny</h2>
+                    <p>Sowieckie dywizje w Polsce ruszają na Warszawę. Na lotnisku ląduje rozwścieczony Nikita Chruszczow. Radzieckie dowództwo grozi siłowym zdławieniem polskich przemian.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">2</div>
+                        <div class="stat-desc">Dywizje pancerne Armii Radzieckiej opuściły swoje bazy kierując się na Warszawę.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14 -->
+        <section class="slide">
+            <div class="center-layout">
+                <h2>Ryzyko interwencji zażegnane</h2>
+                <p>Po niezwykle trudnych i twardych negocjacjach Gomułce udaje się przekonać Chruszczowa. Polska pozostaje w bloku wschodnim, ale zyskuje gwarancję wewnętrznej samodzielności.</p>
+            </div>
+        </section>
+
+        <!-- Slide 15 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <span class="date-marker">24 Października 1956</span>
+                    <h2>Polski Październik</h2>
+                    <p>Największy zryw entuzjazmu w historii PRL. Setki tysięcy warszawiaków gromadzą się na wiecu, wiwatując na cześć Gomułki. Zaczyna się krótki okres niespotykanej wolności słowa.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">400 tys.</div>
+                        <div class="stat-desc">Osób zgromadzonych na Placu Defilad by słuchać przemówienia.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 16 -->
+        <section class="slide">
+            <div class="center-layout">
+                <h2>Skutki Odwilży</h2>
+                <p>Koniec przymusowej kolektywizacji rolnictwa, uwolnienie kardynała Wyszyńskiego z internowania i usunięcie radzieckich marszałków z polskiego wojska. To najważniejsze zdobycze Października.</p>
+                <div class="dramatic-line"></div>
+            </div>
+        </section>
+
+        <!-- Slide 17 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Dramat na Węgrzech</h2>
+                    <p>Gdy Polska cieszy się swoimi zdobyczami, węgierskie próby reform kończą się sowiecką inwazją i masakrą w Budapeszcie. Polacy masowo oddają krew dla bratniego narodu.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num red">3 000</div>
+                        <div class="stat-desc">Zabitych Węgrów w wyniku radzieckiej interwencji zbrojnej.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 18 -->
+        <section class="slide">
+            <div class="center-layout">
+                <h2>Mała Stabilizacja</h2>
+                <p>Okres wolności nie trwa długo. Zaledwie po roku Gomułka zaczyna zamykać reformatorskie pisma. Władza wraca do autorytarnych nawyków, choć stalinizm znika na zawsze.</p>
+            </div>
+        </section>
+
+        <!-- Slide 19 -->
+        <section class="slide">
+            <div class="grid-layout">
+                <div>
+                    <h2>Dziedzictwo 1956</h2>
+                    <p>Mimo rozczarowania rządami Gomułki, bunt robotników w Poznaniu udowodnił, że władza komunistyczna musi liczyć się ze społeczeństwem. To tutaj zasiano ziarno pod Sierpień '80.</p>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <div class="stat-num">24 lata</div>
+                        <div class="stat-desc">Oddzieliły Poznański Czerwiec od powstania Niezależnego Samorządnego Związku Zawodowego "Solidarność".</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 20 -->
+        <section class="slide">
+            <div class="center-layout">
+                <h1>Dziękuję</h1>
+                <p>Za uwagę.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="controls-capsule">
+        <button id="btn-prev">WSTECZ</button>
+        <div class="counter"><span id="current-slide">1</span> / <span id="total-slides">20</span></div>
+        <button id="btn-next">DALEJ</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            const currentSlideEl = document.getElementById('current-slide');
+            const totalSlidesEl = document.getElementById('total-slides');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            
+            let currentIndex = 0;
+            totalSlidesEl.textContent = totalSlides;
+
+            function updateSlides() {
+                slides.forEach((slide, index) => {
+                    if (index === currentIndex) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+                
+                currentSlideEl.textContent = currentIndex + 1;
+                btnPrev.disabled = currentIndex === 0;
+                btnNext.disabled = currentIndex === totalSlides - 1;
+            }
+
+            function nextSlide() {
+                if (currentIndex < totalSlides - 1) {
+                    currentIndex++;
+                    updateSlides();
+                }
+            }
+
+            function prevSlide() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateSlides();
+                }
+            }
+
+            btnNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                nextSlide();
+            });
+            
+            btnPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                prevSlide();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' || e.code === 'ArrowRight') {
+                    e.preventDefault();
+                    nextSlide();
+                } else if (e.code === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSlide();
+                }
+            });
+
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                nextSlide();
+            });
+
+            updateSlides();
+        });
+    </script>
+</body>
+</html>
